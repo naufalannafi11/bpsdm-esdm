@@ -1,0 +1,8 @@
+* {
+  font: "Poppins", sans-serif;
+}
+
+.active {
+  color: white;
+  text-decoration: underline;
+}
