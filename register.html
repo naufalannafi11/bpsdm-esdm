@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Register</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main class="flex justify-center items-center w-full min-h-screen bg-green-900 text-white mx-auto">
+        <section class="w-30rem w-6/12 m-9 flex flex-col space-y-10">
+            <div class="flex items-center justify-center mb-10">
+                <h1 class="bg-yellow-600 py-2 text-2xl font-medium px-3 rounded-tl-2xl rounded-br-2xl">Welcome To HC Summit 2025</h1>
+            </div>
+    
+            <form action="process_form.php" method="POST" class="flex flex-col space-y-10">
+                <!-- Input Nama Lengkap -->
+                <div class="w-full border-b-2 text-lg focus-within:border-yellow-400 duration-500 transform text-white">
+                    <input id="fullName" name="full_name" type="text" placeholder="Nama Lengkap" class="bg-transparent w-full focus:outline-none placeholder:italic" required>
+                </div>
+    
+                <!-- Input Email -->
+                <div class="w-full border-b-2 text-lg focus-within:border-yellow-400 duration-500 transform">
+                    <input id="email" name="email" type="email" placeholder="Email" class="bg-transparent w-full focus:outline-none placeholder:italic" required>
+                </div>
+    
+                <!-- Input Nomor HP -->
+                <div class="w-full border-b-2 text-lg focus-within:border-yellow-400 duration-500 transform">
+                    <input id="phone" name="phone" type="tel" placeholder="No HP" class="bg-transparent w-full focus:outline-none placeholder:italic" required>
+                </div>
+    
+                <!-- Input Instansi -->
+                <div class="w-full border-b-2 text-lg focus-within:border-yellow-400 duration-500 transform">
+                    <input id="agency" name="agency" type="text" placeholder="Instansi" class="bg-transparent w-full focus:outline-none placeholder:italic" required>
+                </div>
+    
+                <!-- Pilihan Partisipasi -->
+                <div class="mb-4">
+                    <label class="block text-white font-semibold mb-2" for="participation">Partisipasi</label>
+                    <div class="flex flex-col space-y-2">
+                      <label class="inline-flex items-center">
+                        <input id="host" type="checkbox" class="form-checkbox" name="participation[]" value="Host">
+                        <span class="ml-2">Host</span>
+                      </label>
+                      <label class="inline-flex items-center">
+                        <input id="moderator" type="checkbox" class="form-checkbox" name="participation[]" value="Moderator">
+                        <span class="ml-2">Moderator</span>
+                      </label>
+                      <label class="inline-flex items-center">
+                        <input id="participant" type="checkbox" class="form-checkbox" name="participation[]" value="Participant">
+                        <span class="ml-2">Participant</span>
+                      </label>
+                    </div>
+                </div>
+    
+                <!-- Tombol Submit -->
+                <div class="flex space-x-4">
+                    <button id="submitBtn" type="submit" class="bg-yellow-600 text-white font-bold py-2 px-4 rounded">
+                      Submit
+                    </button>
+                    <a href="index.html" class="bg-yellow-600 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded">
+                      Back
+                    </a> 
+                </div>
+            </form>
+        </section>
+    </main>
+    
+
+    <!-- JavaScript untuk validasi form dan tombol submit -->
+    <script>
+        const fullName = document.getElementById('fullName');
+        const email = document.getElementById('email');
+        const phone = document.getElementById('phone');
+        const agency = document.getElementById('agency');
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        const submitBtn = document.getElementById('submitBtn');
+
+        // Fungsi untuk memeriksa apakah form valid
+        function isFormValid() {
+            const isFullNameFilled = fullName.value.trim() !== "";
+            const isEmailFilled = email.value.trim() !== "";
+            const isPhoneFilled = phone.value.trim() !== "";
+            const isAgencyFilled = agency.value.trim() !== "";
+            const isCheckboxChecked = Array.from(checkboxes).some(checkbox => checkbox.checked);
+            
+            return isFullNameFilled && isEmailFilled && isPhoneFilled && isAgencyFilled && isCheckboxChecked;
+        }
+
+        // Fungsi untuk mengupdate status tombol submit
+        function updateSubmitButtonState() {
+            if (isFormValid()) {
+                submitBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                submitBtn.disabled = false;
+            } else {
+                submitBtn.classList.add('opacity-50', 'cursor-not-allowed');
+                submitBtn.disabled = true;
+            }
+        }
+
+        // Tambahkan event listener pada semua input dan checkbox
+        fullName.addEventListener('input', updateSubmitButtonState);
+        email.addEventListener('input', updateSubmitButtonState);
+        phone.addEventListener('input', updateSubmitButtonState);
+        agency.addEventListener('input', updateSubmitButtonState);
+        checkboxes.forEach(checkbox => checkbox.addEventListener('change', updateSubmitButtonState));
+
+        // Cek status tombol submit secara awal
+        updateSubmitButtonState();
+    </script>
+</body>
+</html>
